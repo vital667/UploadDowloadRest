@@ -10,21 +10,24 @@ import restservice.properties.FileStorageProperties;
 import restservice.exceptions.FileNotFoundException;
 import restservice.exceptions.FileStorageException;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FileStorageService {
     private final Path fileStorageLocation;
+//    private final Path fileDownloadLocation;
 
     @Autowired
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
+//        this.fileDownloadLocation = Paths.get(fileStorageProperties.getDownloadDir())
+//                .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
@@ -36,6 +39,8 @@ public class FileStorageService {
     public String storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+
         try {
             // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {

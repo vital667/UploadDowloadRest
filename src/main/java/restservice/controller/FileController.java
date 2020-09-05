@@ -1,5 +1,6 @@
 package restservice.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-
+    @ApiOperation(value = "Upload Any File", notes = "Upload Any File")
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -40,6 +41,7 @@ public class FileController {
     }
 
 
+    @ApiOperation(value = "Upload Any Files", notes = "Upload Any Files")
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files){
         return Arrays.asList(files).stream()
@@ -48,6 +50,7 @@ public class FileController {
     }
 
 
+    @ApiOperation(value = "Download The Same Files You Uploaded", notes = "Download The Same Files You Uploaded")
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile (@PathVariable String fileName, HttpServletRequest request){
         // Load file as Resource

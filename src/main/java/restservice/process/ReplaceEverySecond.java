@@ -5,12 +5,13 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class ReplaceEverySecond {
 
-    public static String fileName;
+//    public static String fileName;
 
-    public static String replaceEverySecond() {
+    public static void processAndSave(String fileName) {
         StringBuffer inputBuffer = new StringBuffer();
 
         try (BufferedReader br = Files.newBufferedReader(Paths.get("uploads/" + fileName))) {
@@ -19,13 +20,15 @@ public class ReplaceEverySecond {
                 inputBuffer.append(line);
                 inputBuffer.append("\n");
             }
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get("downloads/" + fileName));
-            writer.write(replace(inputBuffer.toString()));
-            writer.close();
+//            BufferedWriter writer = Files.newBufferedWriter(Paths.get("downloads/" + fileName));
+//            writer.write(replace(inputBuffer.toString()));
+//            writer.close();
+           Files.write(Paths.get("downloads/" + fileName), replace(inputBuffer.toString()).getBytes(), StandardOpenOption.CREATE);
+            Counter.count(fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return replace(inputBuffer.toString());
+      //  return replace(inputBuffer.toString());
     }
 
 
