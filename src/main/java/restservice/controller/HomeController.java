@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restservice.service.FileDownloadService;
-import restservice.service.ReadAndCountService;
-import restservice.model.Response;
+import restservice.process.ReadAndCountService;
+import restservice.model.UploadFileResponse;
 import restservice.service.FileStorageService;
-import restservice.service.ReplaceEverySecond;
+import restservice.process.ReplaceEverySecond;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -25,11 +25,10 @@ import java.util.Map;
 @RestController
 public class HomeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileDownloadController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     private FileStorageService fileStorageService;
-
     @Autowired
     private FileDownloadService fileDownloadService;
 
@@ -43,7 +42,7 @@ public class HomeController {
 
     @ApiOperation(value = "Upload File for ReadAndCount Processing", notes = "Upload File for ReadAndCount Processing")
     @PostMapping("/readAndCount")
-    public Response readAndCountUpload(@RequestParam("file") MultipartFile file) {
+    public UploadFileResponse readAndCountUpload(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
         ReadAndCountService.fileName = fileName;
 
@@ -51,18 +50,20 @@ public class HomeController {
                 .path("/readAndCount")
                 .pathSegment(fileName)
                 .toUriString();
-        return new Response(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
 
-    @ApiOperation(value = "Show result in html", notes = "Show result in html")
+    @ApiOperation(value = "Processes uploaded File, Creates file for download, Shows result in html",
+            notes = "Processes data, Creates file for download, Shows result in html")
     @GetMapping  ("/readAndCount")
     public Map  readAndCountDownload (){
         return ReadAndCountService.readAndCount();
     }
 
 
-    @ApiOperation(value = "Download processed file ReadAndCountDownload", notes = "Download processed file ReadAndCountDownload")
+    @ApiOperation(value = "Download processed file ReadAndCountDownload, !Process file first"
+            , notes = "Download processed file ReadAndCountDownload")
     @GetMapping("/readAndCount/{fileName:.+}")
     public ResponseEntity<Resource> downloadFileReadAndCountUpload (@PathVariable String fileName, HttpServletRequest request){
         Resource resource = fileDownloadService.loadFileAsResource(fileName);
@@ -83,25 +84,27 @@ public class HomeController {
 
     @ApiOperation(value = "Upload File for ReplaceEverySecond Processing", notes = "Upload File for ReplaceEverySecond Processing")
     @PostMapping("/replaceEverySecond")
-    public Response replaceEverySecond(@RequestParam("file") MultipartFile file) {
+    public UploadFileResponse replaceEverySecond(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
         ReplaceEverySecond.fileName = fileName;
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/replaceEverySecond")
                 .pathSegment(fileName)
                 .toUriString();
-        return new Response(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
 
-    @ApiOperation(value = "Show result in html", notes = "Show result in html")
+    @ApiOperation(value = "Processes uploaded File, Creates file for download, Shows result in html",
+            notes = "Processes data, Creates file for download, Shows result in html")
     @GetMapping  ("/replaceEverySecond")
     public String  replaceEverySecond (){
         return ReplaceEverySecond.replaceEverySecond();
     }
 
 
-    @ApiOperation(value = "Download processed file ReplaceEverySecond", notes = "Download processed file ReplaceEverySecond")
+    @ApiOperation(value = "Download processed file ReplaceEverySecond, !Process file first"
+            , notes = "Download processed file ReplaceEverySecond")
     @GetMapping("/replaceEverySecond/{fileName:.+}")
     public ResponseEntity<Resource> downloadFileReplaceEverySecond (@PathVariable String fileName, HttpServletRequest request){
         Resource resource = fileDownloadService.loadFileAsResource(fileName);

@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableConfigurationProperties(FileStorageProperties.class)
+@EnableConfigurationProperties({FileStorageProperties.class})
 @EnableSwagger2
 public class RestServiceApplication {
 
