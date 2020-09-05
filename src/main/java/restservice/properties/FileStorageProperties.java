@@ -1,4 +1,4 @@
-package restservice;
+package restservice.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -15,5 +15,15 @@ public class FileStorageProperties {
 
     public void setUploadDir(String uploadDir) {
         this.uploadDir = uploadDir;
+    }
+
+    private String downloadDir;
+
+    public String getDownloadDir() {
+        return downloadDir;
+    }
+
+    public void setDownloadDir(String downloadDir) {
+        this.downloadDir = downloadDir;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import restservice.FileStorageProperties;
+import restservice.properties.FileStorageProperties;
 import restservice.exceptions.FileNotFoundException;
 import restservice.exceptions.FileStorageException;
 
