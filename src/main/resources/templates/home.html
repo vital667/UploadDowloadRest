@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Spring Boot File Upload/Download Rest API</title>
+    <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+<div class="upload-container">
+    <div class="upload-header">
+        <h2>File Upload/Download Rest API</h2>
+    </div>
+    <div class="upload-content">
+
+        <div class="single-upload">
+            <h3>Upload ReadAndCount .txt File</h3>
+            <form id="readAndCountUploadForm" name="singleUploadForm">
+                <input id="readAndCountFileUploadInput" type="file" name="file" class="file-input" required/>
+                <button type="submit" class="primary submit-btn">Submit</button>
+            </form>
+            <div class="upload-response">
+                <div id="readAndCountFileUploadError"></div>
+                <div id="readAndCountUploadSuccess"></div>
+            </div>
+        </div>
+
+        <div class="multiple-upload">
+            <h3>Upload ReplaceEverySecond .txt File</h3>
+            <form id="replaceEverySecondUploadForm" name="multipleUploadForm">
+                <input id="replaceEverySecondFileUploadInput" type="file" name="files" class="file-input" multiple
+                       required/>
+                <button type="submit" class="primary submit-btn">Submit</button>
+            </form>
+            <div class="upload-response">
+                <div id="replaceEverySecondUploadError"></div>
+                <div id="replaceEverySecondUploadSuccess"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/main2.js"></script>
+</body>
+</html>

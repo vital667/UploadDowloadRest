@@ -41,7 +41,7 @@ public class FileController {
     }
 
 
-    @ApiOperation(value = "Upload Any Files", notes = "Upload Any Files")
+    @ApiOperation(value = "Upload Multiple Files", notes = "Upload Multiple Files")
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files){
         return Arrays.asList(files).stream()

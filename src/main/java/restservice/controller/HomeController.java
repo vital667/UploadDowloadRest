@@ -67,9 +67,10 @@ public class HomeController {
             logger.warn("Record "+fileName+" was successfully added to DataBase");
         }
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/readAndCount")
+                .path("/api")
                 .pathSegment(fileName)
                 .toUriString();
+
         return new ResponseEntity<>(
                 new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize()),
                 HttpStatus.OK);
@@ -91,7 +92,7 @@ public class HomeController {
             logger.warn("Record was successfully added to DataBase");
         }
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/replaceEverySecond")
+                .path("/api")
                 .pathSegment(fileName)
                 .toUriString();
         return new ResponseEntity<>(
