@@ -1,11 +1,14 @@
 package restservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import restservice.controller.HomeController;
 import restservice.properties.FileStorageProperties;
 import restservice.exceptions.FileNotFoundException;
 import restservice.exceptions.FileStorageException;
@@ -20,14 +23,11 @@ import java.util.stream.Stream;
 @Service
 public class FileStorageService {
     private final Path fileStorageLocation;
-//    private final Path fileDownloadLocation;
 
     @Autowired
     public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
-//        this.fileDownloadLocation = Paths.get(fileStorageProperties.getDownloadDir())
-//                .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
@@ -39,8 +39,6 @@ public class FileStorageService {
     public String storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-
         try {
             // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {
