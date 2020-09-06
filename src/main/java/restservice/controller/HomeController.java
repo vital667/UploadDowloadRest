@@ -19,7 +19,7 @@ import restservice.process.ShowAllFilesFromFile;
 import restservice.repository.RecordRepository;
 import restservice.service.FileDownloadService;
 import restservice.process.ReadAndCountService;
-import restservice.model.UploadFileResponse;
+import restservice.payload.UploadFileResponse;
 import restservice.service.FileStorageService;
 import restservice.process.ReplaceEverySecond;
 

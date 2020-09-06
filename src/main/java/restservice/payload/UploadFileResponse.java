@@ -1,4 +1,4 @@
-package restservice.model;
+package restservice.payload;
 
 public class UploadFileResponse {
     private String fileName;

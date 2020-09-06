@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restservice.service.FileStorageService;
-import restservice.model.UploadFileResponse;
+import restservice.payload.UploadFileResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
